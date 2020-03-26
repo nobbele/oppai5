@@ -45,7 +45,7 @@ func (pp *PPv2) ppv2x(aimStars, speedStars float64,
 
 	if beatmap != nil {
 		mode = beatmap.Mode
-		baseAR = beatmap.AR
+		baseAR = beatmap.getAR()
 		baseOD = beatmap.OD
 		maxCombo = beatmap.maxCombo()
 		nsliders = beatmap.NSliders
@@ -152,9 +152,9 @@ func (pp *PPv2) ppv2x(aimStars, speedStars float64,
 	pp.Aim *= hdBonus
 
 	if (mods & ModsFL) != 0 {
-		fl_bonus := 1.0 + 0.35 * math.Min(1.0, float64(nobjects) / 200.0)
+		fl_bonus := 1.0 + 0.35*math.Min(1.0, float64(nobjects)/200.0)
 		if nobjects > 200 {
-			fl_bonus += 0.3 * math.Min(1, (float64(nobjects) - 200.0) / 300.0)
+			fl_bonus += 0.3 * math.Min(1, (float64(nobjects)-200.0)/300.0)
 		}
 		if nobjects > 500 {
 			fl_bonus += (float64(nobjects) - 500.0) / 1200.0
@@ -163,8 +163,8 @@ func (pp *PPv2) ppv2x(aimStars, speedStars float64,
 	}
 
 	accBonus := 0.5 + accuracy/2.0
-	od_squared := mapstats.OD*mapstats.OD
-	odBonus := float64(0.98 +  od_squared / 2500.0)
+	od_squared := mapstats.OD * mapstats.OD
+	odBonus := float64(0.98 + od_squared/2500.0)
 
 	pp.Aim *= accBonus
 	pp.Aim *= odBonus
@@ -180,7 +180,7 @@ func (pp *PPv2) ppv2x(aimStars, speedStars float64,
 	pp.Speed *= hdBonus
 
 	pp.Speed *= 0.02 + accuracy
-	pp.Speed *= 0.96 + float64(od_squared) / 1600.0
+	pp.Speed *= 0.96 + float64(od_squared)/1600.0
 
 	/* acc pp ---------------------------------------------- */
 	pp.Acc = pow(1.52163, float64(mapstats.OD)) *
@@ -218,21 +218,21 @@ func (pp *PPv2) ppv2x(aimStars, speedStars float64,
 func (pp *PPv2) PPv2WithMods(aimStars, speedStars float64, b *Map, mods, n300, n100, n50, nmiss, combo int) {
 	pp.ppv2x(aimStars, speedStars, -1, b.NSliders, b.NCircles,
 		len(b.Objects), b.Mode, mods, combo, n300, n100, n50, nmiss,
-		b.AR, b.OD, 1, b, -1)
+		b.getAR(), b.OD, 1, b, -1)
 }
 
 // PPv2ssWithMods calculates the pp of the map with the mods passed and 100% acc
 func (pp *PPv2) PPv2ssWithMods(aimStars, speedStars float64, b *Map, mods int) {
 	pp.ppv2x(aimStars, speedStars, -1, b.NSliders, b.NCircles,
 		len(b.Objects), b.Mode, mods, -1, -1, 0, 0, 0,
-		b.AR, b.OD, 1, b, -1)
+		b.getAR(), b.OD, 1, b, -1)
 }
 
 // PPv2ss calculates the pp of the map with nomods and 100% acc
 func (pp *PPv2) PPv2ss(aimStars, speedStars float64, b *Map) {
 	pp.ppv2x(aimStars, speedStars, -1, b.NSliders, b.NCircles,
 		len(b.Objects), b.Mode, ModsNOMOD, -1, -1, 0, 0, 0,
-		b.AR, b.OD, 1, b, -1)
+		b.getAR(), b.OD, 1, b, -1)
 }
 
 // MultiAccPP returns the PP for every acc step
@@ -249,18 +249,18 @@ func (pp *PPv2) PPv2StepWithMods(aimStars, speedStars float64, b *Map, mods int)
 	return MultiAccPP{
 		P95: pp.ppv2x(aimStars, speedStars, -1, b.NSliders, b.NCircles,
 			len(b.Objects), b.Mode, mods, -1, -1, 0, 0, 0,
-			b.AR, b.OD, 1, b, 0.95).Total,
+			b.getAR(), b.OD, 1, b, 0.95).Total,
 		P98: pp.ppv2x(aimStars, speedStars, -1, b.NSliders, b.NCircles,
 			len(b.Objects), b.Mode, mods, -1, -1, 0, 0, 0,
-			b.AR, b.OD, 1, b, 0.98).Total,
+			b.getAR(), b.OD, 1, b, 0.98).Total,
 		P99: pp.ppv2x(aimStars, speedStars, -1, b.NSliders, b.NCircles,
 			len(b.Objects), b.Mode, mods, -1, -1, 0, 0, 0,
-			b.AR, b.OD, 1, b, 0.99).Total,
+			b.getAR(), b.OD, 1, b, 0.99).Total,
 		P99p5: pp.ppv2x(aimStars, speedStars, -1, b.NSliders, b.NCircles,
 			len(b.Objects), b.Mode, mods, -1, -1, 0, 0, 0,
-			b.AR, b.OD, 1, b, 0.995).Total,
+			b.getAR(), b.OD, 1, b, 0.995).Total,
 		P100: pp.ppv2x(aimStars, speedStars, -1, b.NSliders, b.NCircles,
 			len(b.Objects), b.Mode, mods, -1, -1, 0, 0, 0,
-			b.AR, b.OD, 1, b, 1.0).Total,
+			b.getAR(), b.OD, 1, b, 1.0).Total,
 	}
 }

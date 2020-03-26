@@ -74,3 +74,10 @@ func (m *Map) maxCombo() int {
 	return res
 
 }
+
+func (m *Map) getAR() float32 {
+	if m.AR == -1 {
+		return m.OD
+	}
+	return m.AR
+}

@@ -65,10 +65,16 @@ func getPP(beatmap *Map, mods, n300, n100, n50, nmiss, combo int) PP {
 	}
 }
 
+func newMap() *Map {
+	return &Map{
+		AR: -1, // Set to -1 to support old maps that don't have any AR
+	}
+}
+
 // Parse parses the file f and returns a beatmap
 func Parse(f io.Reader) *Map {
 	parser := &Parser{}
-	parser.Beatmap = &Map{}
+	parser.Beatmap = newMap()
 	parser.Map(f)
 	return parser.Beatmap
 }
@@ -76,7 +82,7 @@ func Parse(f io.Reader) *Map {
 // Parse parses the file f and returns a beatmap with a specified number of objects parsed
 func ParsebyNum(f io.Reader, objnum int) *Map {
 	parser := &Parser{}
-	parser.Beatmap = &Map{}
+	parser.Beatmap = newMap()
 	parser.MapbyNum(f, objnum)
 	return parser.Beatmap
 }

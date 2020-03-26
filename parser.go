@@ -232,4 +232,3 @@ func (p *Parser) MapbyNum(reader io.Reader, objnum int) *Map {
 	}
 	return p.Beatmap
 }
-
