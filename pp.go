@@ -55,7 +55,6 @@ func (pp *PPv2) ppv2x(aimStars, speedStars float64,
 	}
 
 	if mode != ModeStd {
-		fmt.Println("this gamemode is not yet supported")
 		return PPv2{
 			Total:            -1,
 			Aim:              -1,

@@ -2,7 +2,6 @@ package oppai
 
 import (
 	"bufio"
-	"fmt"
 	"io"
 	"strings"
 )
@@ -50,10 +49,6 @@ func (p *Parser) general() {
 	pr := p.property()
 	if pr[0] == "Mode" {
 		p.Beatmap.Mode = parseInt(pr[1])
-
-		if p.Beatmap.Mode != ModeStd {
-			fmt.Println("this gamemode is not yet supported")
-		}
 	}
 }
 
