@@ -1,6 +1,7 @@
 package oppai
 
 import (
+	"fmt"
 	"math"
 )
 
@@ -54,7 +55,14 @@ func (pp *PPv2) ppv2x(aimStars, speedStars float64,
 	}
 
 	if mode != ModeStd {
-		panic("this gamemode is not yet supported")
+		fmt.Println("this gamemode is not yet supported")
+		return PPv2{
+			Total:            -1,
+			Aim:              -1,
+			Speed:            -1,
+			Acc:              -1,
+			ComputedAccuracy: Accuracy{},
+		}
 	}
 
 	if maxCombo <= 0 {
