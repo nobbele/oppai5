@@ -1,7 +1,6 @@
 package oppai
 
 import (
-	"fmt"
 	"math"
 )
 
